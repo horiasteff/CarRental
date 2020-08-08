@@ -28,7 +28,6 @@ public class User {
             if (rentedCar.isCurrentlyRented()) {
                 return rentedCar;
             }
-
         }
         return null;
     }

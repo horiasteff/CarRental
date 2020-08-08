@@ -18,7 +18,7 @@ public class Shop {
     public void showMenu() {
 
         System.out.println(" -----------------------------------------------");
-        System.out.println("|    Welcome to the Jademy Car Rental Service   |");
+        System.out.println("|    Welcome to the Horia Car Rental Service   |");
         System.out.println(" -----------------------------------------------");
         System.out.println();
         System.out.println("                    MAIN MENU                   ");

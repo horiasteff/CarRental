@@ -5,17 +5,17 @@ public class Car {
 
     }
 
-
-    public String make;
-    public String model;
-    public Integer year;
-    public String carType; // coupe, sedan, hatchback, convertible, wagon, SUV
-    public String fuelType; // diesel, gasoline, alternative
-    public Integer doorNumber;
-    public String color;
-    public String transmissionType; // automatic, manual
-    public String engine;
-    public String basePrice;
+    private String make;
+    private String model;
+    private Integer year;
+    private String carType; // coupe, sedan, hatchback, convertible, wagon, SUV
+    private String fuelType; // diesel, gasoline, alternative
+    private Integer doorNumber;
+    private String color;
+    private String transmissionType; // automatic, manual
+    private String engine;
+    private String basePrice;
+    private boolean isRented = false;
 
     // Q: do we need a constructor other than the default one?
     // Q: how can we better protect the car data?
@@ -25,13 +25,21 @@ public class Car {
         this.make = make;
         this.model = model;
         this.year = year;
-        this.carType = carType;
+        this.carType = carType;// berlina, hatchback..
         this.fuelType = fuelType;
         this.doorNumber = doorNumber;
         this.color = color;
         this.transmissionType = transmissionType;
         this.engine = engine;
         this.basePrice = basePrice;
+    }
+
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
     }
 
     public String getMake() {

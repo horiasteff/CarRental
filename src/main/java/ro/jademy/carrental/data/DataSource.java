@@ -11,8 +11,8 @@ import java.util.List;
 public class DataSource {
     public static List<Car> carList() {
         List<Car> carList = new ArrayList<>();
-        Car skoda = new Skoda();
-        Car bmw = new BMW();
+        Car skoda = new Skoda("Skoda", "Superb",2016,"berlin","diesel", 4, "grey","automtic", "TDI", "25000");
+        Car bmw = new X5("BWM", "X5",2020, "hatchback","diesel", 4,"black", "automatic","TDI","48000", true);
         carList.add(skoda);
         carList.add(bmw);
         return carList;
