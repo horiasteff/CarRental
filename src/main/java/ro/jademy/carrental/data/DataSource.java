@@ -15,6 +15,7 @@ public class DataSource {
         Car bmw = new X5("BWM", "X5",2020, "hatchback","diesel", 4,"black", "automatic","TDI","48000", true);
         carList.add(skoda);
         carList.add(bmw);
+        skoda.setRented(true);
         return carList;
     }
 
@@ -24,11 +25,12 @@ public class DataSource {
         User Horia = new User("Horia", "1234");
         User Daniel = new User("Daniel", "1234");
         User Sorin = new User("Sorin", "1234");
+        User Andrei = new User("Andrei", "1234");
         users.add(Horia);
         users.add(Daniel);
         users.add(Sorin);
+        users.add(Andrei);
         return users;
     }
-
 
 }

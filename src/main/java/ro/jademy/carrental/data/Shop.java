@@ -1,5 +1,7 @@
 package ro.jademy.carrental.data;
 
+import ro.jademy.carrental.car.Car;
+
 import java.util.List;
 
 public class Shop {
@@ -7,12 +9,48 @@ public class Shop {
 
     public boolean login(String username, String password) {
 
-        // TODO: implement a basic user login
+        // TODO: implement a basic users login
+        User loggedInUser = null;
 
-        List<User> user = DataSource.userList();
-        if (user.get(DataSource.userList().indexOf(user)+1).getName().equals(username) && user.get(DataSource.userList().indexOf(user)+1).getPassword().equals(password))
+        List<User> users = DataSource.userList();
+        for (User user : DataSource.userList()) {
+            if (user.getName().equals(username)) {
+                if (user.getPassword().equals(password)) {
+                    loggedInUser = user;
+                    // when a user is found, "break" stops iterating through the list
+                    break;
+                }
+            }
+        }
+        if (loggedInUser != null) {
+            System.out.println("User successfully logged in: " + loggedInUser.getName());
             return true;
-        return false;
+        } else {
+            System.out.println("Invalid username/password combination");
+            return false;
+        }
+    }
+
+    public int getIndexOfUser(String username, String password) {
+
+        User loggedInUser = null;
+
+        List<User> users = DataSource.userList();
+        for (User user : DataSource.userList()) {
+            if (user.getName().equals(username)) {
+                if (user.getPassword().equals(password)) {
+                    loggedInUser = user;
+                    // when a user is found, "break" stops iterating through the list
+                    break;
+                }
+            }
+        }
+        if (loggedInUser != null) {
+            System.out.println(users.indexOf(loggedInUser));
+            return users.indexOf(loggedInUser);
+        } else {
+            return -2;
+        }
     }
 
     public void showMenu() {
@@ -42,6 +80,24 @@ public class Shop {
 
     }
 
+    public void rentACar(String make, String model, int year, String carType, String fuelType, int doorNumbers, String color, String transmission, String engine, String price) {
+        List<Car> cars = DataSource.carList();
+        List<User> users = DataSource.userList();
+        List<RentedCar> rentedCars = null;
+        for (Car car : cars) {
+            if (!car.isRented()) {
+                if (car.getMake().equalsIgnoreCase(make) && car.getModel().equalsIgnoreCase(model) &&
+                        car.getYear().equals(year) && car.getCarType().equalsIgnoreCase(carType) &&
+                        car.getFuelType().equalsIgnoreCase(fuelType) && car.getDoorNumber().equals(doorNumbers) &&
+                        car.getColor().equalsIgnoreCase(color) && car.getTransmissionType().equalsIgnoreCase(transmission) &&
+                        car.getEngine().equalsIgnoreCase(engine) && car.getBasePrice().equalsIgnoreCase(price))
+
+                    car.setRented(true);
+
+            }
+        }
+    }
+
     public void calculatePrice(int numberOfDays) {
         // TODO: apply a discount to the base price of a car based on the number of rental days
         // TODO: document the implemented discount algorithm
@@ -49,7 +105,11 @@ public class Shop {
         // TODO: for a more difficult algorithm, change this method to include date intervals and take into account
         //       weekdays and national holidays in which the discount should be smaller
 
-        // Q: what should be the return type of this method?
+        List<User> user = DataSource.userList();
+        if (numberOfDays > 30) {
+            user.get(user.indexOf(user));
+        }
+
     }
 
 
