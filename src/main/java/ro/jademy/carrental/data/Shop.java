@@ -3,9 +3,11 @@ package ro.jademy.carrental.data;
 import ro.jademy.carrental.car.Car;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Shop {
     // Q: what fields and methods should this class contain?
+    Scanner sc = new Scanner(System.in);
 
     public boolean login(String username, String password) {
 
@@ -28,28 +30,6 @@ public class Shop {
         } else {
             System.out.println("Invalid username/password combination");
             return false;
-        }
-    }
-
-    public int getIndexOfUser(String username, String password) {
-
-        User loggedInUser = null;
-
-        List<User> users = DataSource.userList();
-        for (User user : DataSource.userList()) {
-            if (user.getName().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    loggedInUser = user;
-                    // when a user is found, "break" stops iterating through the list
-                    break;
-                }
-            }
-        }
-        if (loggedInUser != null) {
-            System.out.println(users.indexOf(loggedInUser));
-            return users.indexOf(loggedInUser);
-        } else {
-            return -2;
         }
     }
 
@@ -80,20 +60,36 @@ public class Shop {
 
     }
 
-    public void rentACar(String make, String model, int year, String carType, String fuelType, int doorNumbers, String color, String transmission, String engine, String price) {
+    public void rentACar() {
         List<Car> cars = DataSource.carList();
         List<User> users = DataSource.userList();
-        List<RentedCar> rentedCars = null;
-        for (Car car : cars) {
-            if (!car.isRented()) {
-                if (car.getMake().equalsIgnoreCase(make) && car.getModel().equalsIgnoreCase(model) &&
-                        car.getYear().equals(year) && car.getCarType().equalsIgnoreCase(carType) &&
-                        car.getFuelType().equalsIgnoreCase(fuelType) && car.getDoorNumber().equals(doorNumbers) &&
-                        car.getColor().equalsIgnoreCase(color) && car.getTransmissionType().equalsIgnoreCase(transmission) &&
-                        car.getEngine().equalsIgnoreCase(engine) && car.getBasePrice().equalsIgnoreCase(price))
 
-                    car.setRented(true);
+        boolean renting = true;
+        boolean isFound = false;
+        while (renting) {
+            renting = false;
 
+            System.out.println("What is the MAKE of the car you want to rent?");
+            String make = sc.next();
+            System.out.println("What is the MODEL of the car you want to rent?");
+            String model = sc.next();
+            System.out.println("What is the COLOR of the car you want to rent?");
+            String color = sc.next();
+
+            for (Car car : cars) {
+                if (!car.isRented()) {
+                    if (make.equalsIgnoreCase(car.getMake()) && model.equalsIgnoreCase(car.getModel()) && color.equalsIgnoreCase(car.getColor())) {
+                        isFound = true;
+                        System.out.println("The car you want to rent is: " + car);
+                        System.out.println("The price of the car is:" + car.getBasePrice() + "$");
+                        car.setRented(true);
+                        break;
+                    }
+                }
+            }
+            if (!isFound) {
+                System.out.println("We couldn't find your specified car. Try something else");
+                renting = true;
             }
         }
     }

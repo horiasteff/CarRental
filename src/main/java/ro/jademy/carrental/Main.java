@@ -12,9 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        Shop login = new Shop();
+        Shop shop = new Shop();
         Scanner sc = new Scanner(System.in);
+
         //the user enters the username and the password
 
         System.out.println("Enter username");
@@ -22,12 +22,12 @@ public class Main {
         System.out.println("Enter password");
         String password = sc.next();
 
-        if (login.login(userName, password)) {
-            login.getIndexOfUser(userName, password);
-            login.showMenu();
+        if (shop.login(userName, password)) {
+            shop.showMenu();
             System.out.println();
             System.out.println("Enter your option");
             String option = sc.next();
+            String answer;
 
             switch (option) {
                 case "1":
@@ -35,13 +35,20 @@ public class Main {
                     for (Car car : DataSource.carList()) {
                         System.out.println(car);
                     }
+                    System.out.println();
+                    shop.rentACar();
                     break;
                 case "2":
-                    System.out.println("These are the rented cars");
+                    System.out.println("These are the available cars");
                     for (Car car : DataSource.carList()) {
                         if (!car.isRented()) {
                             System.out.println(car);
                         }
+                    }
+                    System.out.println("Do you also want to rent a car?");
+                    answer = sc.next();
+                    if (answer.equalsIgnoreCase("yes")) {
+                        shop.rentACar();
                     }
                     break;
                 case "3":
@@ -50,6 +57,12 @@ public class Main {
                         if (car.isRented()) {
                             System.out.println(car);
                         }
+
+                    }
+                    System.out.println("Do you also want to rent a car?");
+                    answer = sc.next();
+                    if (answer.equalsIgnoreCase("yes")) {
+                        shop.rentACar();
                     }
                     break;
                 case "4":

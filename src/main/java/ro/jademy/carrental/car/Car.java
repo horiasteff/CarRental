@@ -1,27 +1,28 @@
 package ro.jademy.carrental.car;
 
+import java.util.UUID;
+
 public class Car {
-    public Car(){
 
-    }
-
-    private String make;
-    private String model;
-    private Integer year;
-    private String carType; // coupe, sedan, hatchback, convertible, wagon, SUV
-    private String fuelType; // diesel, gasoline, alternative
-    private Integer doorNumber;
-    private String color;
-    private String transmissionType; // automatic, manual
-    private String engine;
-    private String basePrice;
-    private boolean isRented = false;
+    protected String id;
+    protected String make;
+    protected String model;
+    protected Integer year;
+    protected String carType; // coupe, sedan, hatchback, convertible, wagon, SUV
+    protected String fuelType; // diesel, gasoline, alternative
+    protected Integer doorNumber;
+    protected String color;
+    protected String transmissionType; // automatic, manual
+    protected String engine;
+    protected String basePrice;
+    protected boolean isRented = false;
 
     // Q: do we need a constructor other than the default one?
     // Q: how can we better protect the car data?
 
 
     public Car(String make, String model, Integer year, String carType, String fuelType, Integer doorNumber, String color, String transmissionType, String engine, String basePrice) {
+       this.id = UUID.randomUUID().toString();
         this.make = make;
         this.model = model;
         this.year = year;
@@ -122,10 +123,19 @@ public class Car {
         this.basePrice = basePrice;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Car{" +
-                "make='" + make + '\'' +
+                "id='" + id + '\'' +
+                ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", year=" + year +
                 ", carType='" + carType + '\'' +
@@ -135,6 +145,10 @@ public class Car {
                 ", transmissionType='" + transmissionType + '\'' +
                 ", engine='" + engine + '\'' +
                 ", basePrice='" + basePrice + '\'' +
+                ", isRented=" + isRented +
                 '}';
     }
+
+
+
 }
