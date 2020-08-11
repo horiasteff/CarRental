@@ -3,9 +3,7 @@ package ro.jademy.carrental;
 import ro.jademy.carrental.car.Car;
 import ro.jademy.carrental.data.DataSource;
 import ro.jademy.carrental.data.Shop;
-import ro.jademy.carrental.data.User;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -36,7 +34,11 @@ public class Main {
                         System.out.println(car);
                     }
                     System.out.println();
-                    shop.rentACar();
+                    System.out.println("Do you want to rent a car?");
+                    answer = sc.next();
+                    if (answer.equalsIgnoreCase("yes")) {
+                        shop.rentACar();
+                    }
                     break;
                 case "2":
                     System.out.println("These are the available cars");
@@ -57,7 +59,6 @@ public class Main {
                         if (car.isRented()) {
                             System.out.println(car);
                         }
-
                     }
                     System.out.println("Do you also want to rent a car?");
                     answer = sc.next();
@@ -66,7 +67,17 @@ public class Main {
                     }
                     break;
                 case "4":
-                    System.out.println("case 4");
+                    System.out.println("What is the minimum price?");
+                    long minPrice = sc.nextInt();
+                    System.out.println("What is the maximum price?");
+                    long maxPrice = sc.nextInt();
+                    shop.filterByBudget(minPrice,maxPrice);
+                    System.out.println();
+                    System.out.println("Do you want to rent a car?");
+                    answer = sc.next();
+                    if (answer.equalsIgnoreCase("yes")) {
+                        shop.rentACar();
+                    }
                     break;
             }
         } else {

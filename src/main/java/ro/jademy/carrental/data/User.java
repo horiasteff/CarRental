@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 
-    private String Name;
+    private String name;
     private String password;
     private int nrOfRentedCars;
     private int age;
@@ -45,7 +45,7 @@ public class User {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public String getPassword() {
@@ -55,7 +55,7 @@ public class User {
     List<RentedCar> rentedCars = new ArrayList<>();
 
     public User(String name, String password) {
-        Name = name;
+        this.name = name;
         this.password = password;
     }
 
@@ -71,7 +71,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "Name='" + Name + '\'' +
+                "Name='" + name + '\'' +
                 ", password=" + password +
                 '}';
     }

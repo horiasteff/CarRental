@@ -6,14 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Shop {
-    // Q: what fields and methods should this class contain?
     Scanner sc = new Scanner(System.in);
 
     public boolean login(String username, String password) {
-
-        // TODO: implement a basic users login
         User loggedInUser = null;
-
         List<User> users = DataSource.userList();
         for (User user : DataSource.userList()) {
             if (user.getName().equals(username)) {
@@ -43,9 +39,10 @@ public class Shop {
         System.out.println("1. List all cars");
         System.out.println("2. List available cars");
         System.out.println("3. List rented cars");
-        System.out.println("4. Check income");
-        System.out.println("5. Logout");
-        System.out.println("6. Exit");
+        System.out.println("4. List filtrated by budget");
+        System.out.println("5. Check income");
+        System.out.println("6. Logout");
+        System.out.println("7. Exit");
     }
 
     public void showListMenuOptions() {
@@ -54,25 +51,26 @@ public class Shop {
         System.out.println("1. Filter by make");
         System.out.println("2. Filter by model");
         System.out.println("3. Filter by budget");
-        // TODO: add additional filter methods based on car specs
-
         System.out.println("4. Back to previous menu");
-
     }
 
+    List<Car> cars = DataSource.carList();
+
     public void rentACar() {
-        List<Car> cars = DataSource.carList();
-        List<User> users = DataSource.userList();
 
         boolean renting = true;
         boolean isFound = false;
+        long price = 0;
+
         while (renting) {
             renting = false;
 
             System.out.println("What is the MAKE of the car you want to rent?");
             String make = sc.next();
+            filterByMake(make);
             System.out.println("What is the MODEL of the car you want to rent?");
             String model = sc.next();
+            filterByModel(model);
             System.out.println("What is the COLOR of the car you want to rent?");
             String color = sc.next();
 
@@ -81,8 +79,10 @@ public class Shop {
                     if (make.equalsIgnoreCase(car.getMake()) && model.equalsIgnoreCase(car.getModel()) && color.equalsIgnoreCase(car.getColor())) {
                         isFound = true;
                         System.out.println("The car you want to rent is: " + car);
-                        System.out.println("The price of the car is:" + car.getBasePrice() + "$");
                         car.setRented(true);
+                        System.out.println("fow how many days do you want to rent the car?");
+                        int answer = sc.nextInt();
+                        System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
                         break;
                     }
                 }
@@ -94,19 +94,35 @@ public class Shop {
         }
     }
 
-    public void calculatePrice(int numberOfDays) {
-        // TODO: apply a discount to the base price of a car based on the number of rental days
-        // TODO: document the implemented discount algorithm
-
-        // TODO: for a more difficult algorithm, change this method to include date intervals and take into account
-        //       weekdays and national holidays in which the discount should be smaller
-
-        List<User> user = DataSource.userList();
-        if (numberOfDays > 30) {
-            user.get(user.indexOf(user));
+    public void filterByMake(String make) {
+        for (Car car : cars) {
+            if (car.getMake().equalsIgnoreCase(make)) {
+                System.out.println(car);
+            }
         }
-
     }
 
+    public void filterByModel(String model) {
+        for (Car car : cars) {
+            if (car.getModel().equalsIgnoreCase(model)) {
+                System.out.println(car);
+            }
+        }
+    }
 
+    public void filterByBudget(long minPrice, long maxPrice) {
+        for (Car car : cars) {
+            if(car.getBasePrice() >= minPrice && car.getBasePrice() <= maxPrice){
+                System.out.println(car);
+            }
+        }
+    }
+
+    public long calculatePrice(int numberOfDays, Car car) {
+        long price = car.getBasePrice();
+        if (numberOfDays > 15) {
+            price = car.getBasePrice() - (numberOfDays - 15) * 10;
+        }
+        return price;
+    }
 }

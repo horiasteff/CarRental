@@ -14,14 +14,10 @@ public class Car {
     protected String color;
     protected String transmissionType; // automatic, manual
     protected String engine;
-    protected String basePrice;
+    protected long basePrice;
     protected boolean isRented = false;
 
-    // Q: do we need a constructor other than the default one?
-    // Q: how can we better protect the car data?
-
-
-    public Car(String make, String model, Integer year, String carType, String fuelType, Integer doorNumber, String color, String transmissionType, String engine, String basePrice) {
+    public Car(String make, String model, Integer year, String carType, String fuelType, Integer doorNumber, String color, String transmissionType, String engine, long basePrice) {
        this.id = UUID.randomUUID().toString();
         this.make = make;
         this.model = model;
@@ -115,11 +111,11 @@ public class Car {
         this.engine = engine;
     }
 
-    public String getBasePrice() {
+    public long getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(String basePrice) {
+    public void setBasePrice(long basePrice) {
         this.basePrice = basePrice;
     }
 
@@ -144,9 +140,7 @@ public class Car {
                 ", color='" + color + '\'' +
                 ", transmissionType='" + transmissionType + '\'' +
                 ", engine='" + engine + '\'' +
-                ", basePrice='" + basePrice + '\'' +
-                ", isRented=" + isRented +
-                '}';
+                ", basePrice='" + basePrice + '\'' + '}';
     }
 
 

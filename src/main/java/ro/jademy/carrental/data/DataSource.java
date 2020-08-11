@@ -19,21 +19,21 @@ public class DataSource {
     
     public static List<Car> carList() {
         List<Car> carList = new ArrayList<>();
-        Car skoda1 = new Superb("Superb",2016,"berlin","diesel", 4, "grey","automatic", "TDI", "25000");
-        Car skoda2 = new Octavia("Octavia",2015,"hatchback","gasoline", 4, "red","manual", "TSI", "23000");
-        Car skoda3 = new Skala("Skala",2020,"hatchback","diesel", 4, "green","automatic", "TDI", "30000");
-        Car skoda4 = new Octavia("Octavia",2012,"hatchback","gasoline", 4, "maroon","manual", "TSI", "22000");
+        Car skoda1 = new Superb("Superb",2016,"berlin","diesel", 4, "grey","automatic", "TDI", 25000);
+        Car skoda2 = new Octavia("Octavia",2015,"hatchback","gasoline", 4, "red","manual", "TSI", 23000);
+        Car skoda3 = new Skala("Skala",2020,"hatchback","diesel", 4, "green","automatic", "TDI", 30000);
+        Car skoda4 = new Octavia("Octavia",2012,"hatchback","gasoline", 4, "maroon","manual", "TSI", 22000);
 
 
-        Car bmw1 = new X5( "X5",2015, "hatchback","diesel", 4,"black", "manual","TDI","40000", true);
-        Car bmw2 = new X6( "X6",2016, "hatchback","gasoline", 4,"white", "manual","TSI","42000", true);
-        Car bmw3= new X6( "X6",2017, "hatchback","diesel", 4,"blue", "automatic","TDI","48000", true);
-        Car bmw4 = new X7( "X7",2020, "hatchback","diesel", 4,"gold", "automatic","TDI","53000", true);
+        Car bmw1 = new X5( "X5",2015, "hatchback","diesel", 4,"black", "manual","TDI",40000, true);
+        Car bmw2 = new X6( "X6",2016, "hatchback","gasoline", 4,"white", "manual","TSI",42000, true);
+        Car bmw3= new X6( "X6",2017, "hatchback","diesel", 4,"blue", "automatic","TDI",48000, true);
+        Car bmw4 = new X7( "X7",2020, "hatchback","diesel", 4,"gold", "automatic","TDI",53000, true);
 
-        Car dacia1 = new Logan("Logan", 2008,"berlina", "gasoline",4,"red", "manual", "TSI","15000");
-        Car dacia2 = new Logan("Logan", 2010,"hatchback","diesel", 4,"black", "manual", "TDI","18000");
-        Car dacia3 = new Lodgy("Lodgy",2015,"berlina","diesel", 4, "white", "manual", "TDI", "20000");
-        Car dacia4 = new Lodgy("Lodgy",2016,"hatchback","diesel", 4, "yellow", "manual", "TDI", "22000");
+        Car dacia1 = new Logan("Logan", 2008,"berlina", "gasoline",4,"red", "manual", "TSI",15000);
+        Car dacia2 = new Logan("Logan", 2010,"hatchback","diesel", 4,"black", "manual", "TDI",18000);
+        Car dacia3 = new Lodgy("Lodgy",2015,"berlina","diesel", 4, "white", "manual", "TDI", 20000);
+        Car dacia4 = new Lodgy("Lodgy",2016,"hatchback","diesel", 4, "yellow", "manual", "TDI", 22000);
 
         carList.add(skoda1);
         carList.add(skoda2);
