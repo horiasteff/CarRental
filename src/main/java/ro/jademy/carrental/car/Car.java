@@ -1,5 +1,7 @@
 package ro.jademy.carrental.car;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.UUID;
 
 public class Car {
@@ -18,7 +20,7 @@ public class Car {
     protected boolean isRented = false;
 
     public Car(String make, String model, Integer year, String carType, String fuelType, Integer doorNumber, String color, String transmissionType, String engine, long basePrice) {
-       this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.make = make;
         this.model = model;
         this.year = year;
@@ -129,16 +131,16 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" + "make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", carType='" + carType + '\'' +
-                ", fuelType='" + fuelType + '\'' +
-                ", doorNumber=" + doorNumber +
-                ", color='" + color + '\'' +
-                ", transmissionType='" + transmissionType + '\'' +
-                ", engine='" + engine + '\'' +
-                ", basePrice='" + basePrice + '\'' + '}';
+        return StringUtils.center(make, 14, " ") +
+                StringUtils.center(model, 16, " ") +
+                StringUtils.center(String.valueOf(year), 14, ' ') +
+                StringUtils.center(carType, 12, " ") +
+                StringUtils.center(fuelType, 14, " ") +
+                StringUtils.center(String.valueOf(doorNumber), 15, ' ') +
+                StringUtils.center(color, 10, " ") +
+                StringUtils.center(transmissionType, 17, " ") +
+                StringUtils.center(engine, 20, " ") +
+                StringUtils.center(String.valueOf(basePrice), 8, ' ');
     }
 
 

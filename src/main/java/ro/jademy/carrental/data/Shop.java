@@ -1,5 +1,6 @@
 package ro.jademy.carrental.data;
 
+import org.apache.commons.lang3.StringUtils;
 import ro.jademy.carrental.car.Car;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public class Shop {
     List<User> users = DataSource.userList();
 
     User currentUser = null;
+    Car currentCar = null;
     int i;
 
     public void login() {
@@ -52,7 +54,7 @@ public class Shop {
         System.out.println("Enter your option");
         String option = sc.next();
 
-        Car currentCar = null;
+
         String answer;
 
         switch (option) {
@@ -122,8 +124,10 @@ public class Shop {
     private void getAllCars() {
         i = 1;
         System.out.println("There are all the cars");
+        System.out.println(getCarHeader());
         for (Car car : DataSource.carList()) {
-            System.out.print(i + ". ");
+            String padding = i < 10 ? " " : "";
+            System.out.print(padding + i + ". ");
             System.out.println(car);
             i++;
         }
@@ -131,6 +135,7 @@ public class Shop {
 
     private void getAvailableCars() {
         i = 1;
+        System.out.println(getCarHeader());
         System.out.println("These are the available cars");
         for (Car car : DataSource.carList()) {
             if (!car.isRented()) {
@@ -175,6 +180,7 @@ public class Shop {
                         isFound = true;
                         System.out.println("The car you want to rent is: \n" + car);
                         car.setRented(true);
+                        currentCar = car;
                         System.out.println("\nFow how many days do you want to rent the car?");
                         int answer = sc.nextInt();
                         System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
@@ -192,6 +198,7 @@ public class Shop {
 
     public void filterByMake(String make) {
         i = 1;
+        System.out.println(getCarHeader());
         for (Car car : cars) {
             if (car.getMake().equalsIgnoreCase(make)) {
                 System.out.print(i + ". ");
@@ -203,6 +210,7 @@ public class Shop {
 
     public void filterByModel(String model) {
         i = 1;
+        System.out.println(getCarHeader());
         for (Car car : cars) {
             if (car.getModel().equalsIgnoreCase(model)) {
                 System.out.print(i + ". ");
@@ -214,6 +222,7 @@ public class Shop {
 
     public void filterByBudget(long minPrice, long maxPrice) {
         i = 1;
+        System.out.println(getCarHeader());
         for (Car car : cars) {
             if (car.getBasePrice() >= minPrice && car.getBasePrice() <= maxPrice) {
                 System.out.print(i + ". ");
@@ -229,5 +238,18 @@ public class Shop {
             price = car.getBasePrice() - (numberOfDays - 15) * 10;
         }
         return price;
+    }
+
+    private static String getCarHeader() {
+        return StringUtils.center("  MAKE", 19, " ") +
+                StringUtils.center("  MODEL", 14, " ") +
+                StringUtils.center("YEAR", 16, ' ') +
+                StringUtils.center("CAR TYPE", 8, ' ') +
+                StringUtils.center("FUEL TYPE", 20, ' ') +
+                StringUtils.center("DOORS NUMBER", 10, ' ') +
+                StringUtils.center("COLOR", 10, ' ') +
+                StringUtils.center("TRANSMISSION TYPE", 15, ' ') +
+                StringUtils.center("ENGINE TYPE", 18, ' ') +
+                StringUtils.center("BASE PRICE", 12, ' ');
     }
 }
