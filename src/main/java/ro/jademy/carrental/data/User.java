@@ -24,24 +24,12 @@ public class User {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public int getYearsOfDriving() {
         return yearsOfDriving;
     }
 
-    public void setYearsOfDriving(int yearsOfDriving) {
-        this.yearsOfDriving = yearsOfDriving;
-    }
-
     public int getNrOfAccidents() {
         return nrOfAccidents;
-    }
-
-    public void setNrOfAccidents(int nrOfAccidents) {
-        this.nrOfAccidents = nrOfAccidents;
     }
 
     public String getName() {

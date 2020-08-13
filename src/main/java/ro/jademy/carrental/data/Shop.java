@@ -7,26 +7,30 @@ import java.util.Scanner;
 
 public class Shop {
     Scanner sc = new Scanner(System.in);
+    List<User> users = DataSource.userList();
 
-    public boolean login(String username, String password) {
-        User loggedInUser = null;
-        List<User> users = DataSource.userList();
-        for (User user : DataSource.userList()) {
-            if (user.getName().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    loggedInUser = user;
-                    // when a user is found, "break" stops iterating through the list
-                    break;
+    User currentUser = null;
+    int i;
+
+    public void login() {
+        boolean loginSuccess = false;
+        do {
+            System.out.println("Please enter the username");
+            String username = sc.next();
+            System.out.println("Please enter the password");
+            String password = sc.next();
+
+            for (User user : users) {
+                if (username.equalsIgnoreCase(user.getName()) && password.equalsIgnoreCase(user.getPassword())) {
+                    System.out.println("User: " + user.getName() + "\n");
+                    loginSuccess = true;
+                    currentUser = user;
                 }
             }
-        }
-        if (loggedInUser != null) {
-            System.out.println("User successfully logged in: " + loggedInUser.getName());
-            return true;
-        } else {
-            System.out.println("Invalid username/password combination");
-            return false;
-        }
+            if (!loginSuccess) {
+                System.out.println("Incorrect Username/Password");
+            }
+        } while (!loginSuccess);
     }
 
     public void showMenu() {
@@ -43,6 +47,98 @@ public class Shop {
         System.out.println("5. Check income");
         System.out.println("6. Logout");
         System.out.println("7. Exit");
+
+        System.out.println();
+        System.out.println("Enter your option");
+        String option = sc.next();
+
+        Car currentCar = null;
+        String answer;
+
+        switch (option) {
+
+            case "1":
+                getAllCars();
+                System.out.println();
+                System.out.println("Do you want to rent a car?");
+                answer = sc.next();
+                if (answer.equalsIgnoreCase("yes")) {
+                    rentACar();
+                }
+                break;
+            case "2":
+                getAvailableCars();
+                System.out.println("Do you also want to rent a car?");
+                answer = sc.next();
+                if (answer.equalsIgnoreCase("yes")) {
+                    rentACar();
+                }
+                break;
+            case "3":
+                getRentedCars();
+                System.out.println("Do you also want to rent a car?");
+                answer = sc.next();
+                if (answer.equalsIgnoreCase("yes")) {
+                    System.out.println("There are all the available cars");
+                    for (Car car : DataSource.carList()) {
+                        if (!car.isRented()) {
+                            System.out.print(i + ". ");
+                            System.out.println(car);
+                            i++;
+                        }
+                    }
+                    System.out.println();
+                    rentACar();
+                }
+                break;
+            case "4":
+                System.out.println("What is the minimum price?");
+                long minPrice = sc.nextInt();
+                System.out.println("What is the maximum price?");
+                long maxPrice = sc.nextInt();
+                filterByBudget(minPrice, maxPrice);
+                System.out.println();
+                System.out.println("Do you want to rent a car?");
+                answer = sc.next();
+                if (answer.equalsIgnoreCase("yes")) {
+                    rentACar();
+                }
+                break;
+        }
+    }
+
+    private void getRentedCars() {
+        i = 1;
+        System.out.println("These are the rented cars");
+        for (Car car : DataSource.carList()) {
+            if (car.isRented()) {
+                System.out.print(i);
+                System.out.println(car);
+                i++;
+            }
+        }
+    }
+
+    private void getAllCars() {
+        i = 1;
+        System.out.println("There are all the cars");
+        for (Car car : DataSource.carList()) {
+            System.out.print(i + ". ");
+            System.out.println(car);
+            i++;
+        }
+    }
+
+    private void getAvailableCars() {
+        i = 1;
+        System.out.println("These are the available cars");
+        for (Car car : DataSource.carList()) {
+            if (!car.isRented()) {
+                System.out.print(i + ". ");
+                System.out.println(car);
+                i++;
+            }
+        }
     }
 
     public void showListMenuOptions() {
@@ -60,7 +156,6 @@ public class Shop {
 
         boolean renting = true;
         boolean isFound = false;
-        long price = 0;
 
         while (renting) {
             renting = false;
@@ -78,9 +173,9 @@ public class Shop {
                 if (!car.isRented()) {
                     if (make.equalsIgnoreCase(car.getMake()) && model.equalsIgnoreCase(car.getModel()) && color.equalsIgnoreCase(car.getColor())) {
                         isFound = true;
-                        System.out.println("The car you want to rent is: " + car);
+                        System.out.println("The car you want to rent is: \n" + car);
                         car.setRented(true);
-                        System.out.println("fow how many days do you want to rent the car?");
+                        System.out.println("\nFow how many days do you want to rent the car?");
                         int answer = sc.nextInt();
                         System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
                         break;
@@ -94,26 +189,36 @@ public class Shop {
         }
     }
 
+
     public void filterByMake(String make) {
+        i = 1;
         for (Car car : cars) {
             if (car.getMake().equalsIgnoreCase(make)) {
+                System.out.print(i + ". ");
                 System.out.println(car);
+                i++;
             }
         }
     }
 
     public void filterByModel(String model) {
+        i = 1;
         for (Car car : cars) {
             if (car.getModel().equalsIgnoreCase(model)) {
+                System.out.print(i + ". ");
                 System.out.println(car);
+                i++;
             }
         }
     }
 
     public void filterByBudget(long minPrice, long maxPrice) {
+        i = 1;
         for (Car car : cars) {
-            if(car.getBasePrice() >= minPrice && car.getBasePrice() <= maxPrice){
+            if (car.getBasePrice() >= minPrice && car.getBasePrice() <= maxPrice) {
+                System.out.print(i + ". ");
                 System.out.println(car);
+                i++;
             }
         }
     }

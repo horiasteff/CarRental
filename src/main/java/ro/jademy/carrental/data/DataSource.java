@@ -1,6 +1,5 @@
 package ro.jademy.carrental.data;
 
-import ro.jademy.carrental.car.bmw.BMW;
 import ro.jademy.carrental.car.Car;
 import ro.jademy.carrental.car.bmw.X5;
 import ro.jademy.carrental.car.bmw.X6;
@@ -9,7 +8,6 @@ import ro.jademy.carrental.car.dacia.Lodgy;
 import ro.jademy.carrental.car.dacia.Logan;
 import ro.jademy.carrental.car.skoda.Octavia;
 import ro.jademy.carrental.car.skoda.Skala;
-import ro.jademy.carrental.car.skoda.Skoda;
 import ro.jademy.carrental.car.skoda.Superb;
 
 import java.util.ArrayList;
