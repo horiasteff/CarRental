@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Shop {
     Scanner sc = new Scanner(System.in);
     List<User> users = DataSource.userList();
+    FilterService service = new FilterService();
 
     User currentUser = null;
     Car currentCar = null;
@@ -35,7 +36,45 @@ public class Shop {
         } while (!loginSuccess);
     }
 
+    public void showListMenuOptions() {
+
+        System.out.println("Select an action from below:");
+        System.out.println("1. Filter by make");
+        System.out.println("2. Filter by model");
+        System.out.println("3. Filter by budget");
+        System.out.println("4. Rent without filter");
+        System.out.println("5. Back to previous menu");
+        System.out.println();
+
+        System.out.println("What is your choice?");
+        String choice = sc.next();
+
+        switch (choice) {
+            case "1":
+                System.out.println("What is the MMAKE of the car?");
+                String make = sc.next();
+                service.filterByMake(make);
+                break;
+            case "2":
+                System.out.println("What is the MMODEL of the car?");
+                String model = sc.next();
+                service.filterByMake(model);
+                break;
+            case "3":
+                System.out.println("What is the BUDGET of the car?");
+                System.out.println("What is the minimum price?");
+                long minPrice = sc.nextInt();
+                System.out.println("What is the maximum price?");
+                long maxPrice = sc.nextInt();
+                service.filterByBudget(minPrice, maxPrice);
+                break;
+            case "4":
+                break;
+        }
+    }
+
     public void showMenu() {
+        String answer;
 
         System.out.println(" -----------------------------------------------");
         System.out.println("|    Welcome to the Horia Car Rental Service   |");
@@ -45,23 +84,20 @@ public class Shop {
         System.out.println("1. List all cars");
         System.out.println("2. List available cars");
         System.out.println("3. List rented cars");
-        System.out.println("4. List filtrated by budget");
-        System.out.println("5. Check income");
-        System.out.println("6. Logout");
-        System.out.println("7. Exit");
+        System.out.println("4. Check income");
+        System.out.println("5. Logout");
+        System.out.println("6. Exit");
 
         System.out.println();
         System.out.println("Enter your option");
         String option = sc.next();
-
-
-        String answer;
 
         switch (option) {
 
             case "1":
                 getAllCars();
                 System.out.println();
+                showListMenuOptions();
                 System.out.println("Do you want to rent a car?");
                 answer = sc.next();
                 if (answer.equalsIgnoreCase("yes")) {
@@ -82,23 +118,13 @@ public class Shop {
                 answer = sc.next();
                 if (answer.equalsIgnoreCase("yes")) {
                     System.out.println("There are all the available cars");
-                    for (Car car : DataSource.carList()) {
-                        if (!car.isRented()) {
-                            System.out.print(i + ". ");
-                            System.out.println(car);
-                            i++;
-                        }
-                    }
+                    getAvailableCars();
                     System.out.println();
                     rentACar();
                 }
                 break;
             case "4":
-                System.out.println("What is the minimum price?");
-                long minPrice = sc.nextInt();
-                System.out.println("What is the maximum price?");
-                long maxPrice = sc.nextInt();
-                filterByBudget(minPrice, maxPrice);
+
                 System.out.println();
                 System.out.println("Do you want to rent a car?");
                 answer = sc.next();
@@ -106,6 +132,18 @@ public class Shop {
                     rentACar();
                 }
                 break;
+        }
+    }
+
+    private void getAllCars() {
+        i = 1;
+        System.out.println("There are all the cars");
+        System.out.println(service.getCarHeader());
+        for (Car car : DataSource.carList()) {
+            String padding = i < 10 ? " " : "";
+            System.out.print(padding + i + ". ");
+            System.out.println(car);
+            i++;
         }
     }
 
@@ -121,21 +159,9 @@ public class Shop {
         }
     }
 
-    private void getAllCars() {
-        i = 1;
-        System.out.println("There are all the cars");
-        System.out.println(getCarHeader());
-        for (Car car : DataSource.carList()) {
-            String padding = i < 10 ? " " : "";
-            System.out.print(padding + i + ". ");
-            System.out.println(car);
-            i++;
-        }
-    }
-
     private void getAvailableCars() {
         i = 1;
-        System.out.println(getCarHeader());
+        System.out.println(service.getCarHeader());
         System.out.println("These are the available cars");
         for (Car car : DataSource.carList()) {
             if (!car.isRented()) {
@@ -146,18 +172,9 @@ public class Shop {
         }
     }
 
-    public void showListMenuOptions() {
-
-        System.out.println("Select an action from below:");
-        System.out.println("1. Filter by make");
-        System.out.println("2. Filter by model");
-        System.out.println("3. Filter by budget");
-        System.out.println("4. Back to previous menu");
-    }
-
     List<Car> cars = DataSource.carList();
 
-    public void rentACar() {
+    private void rentACar() {
 
         boolean renting = true;
         boolean isFound = false;
@@ -165,12 +182,13 @@ public class Shop {
         while (renting) {
             renting = false;
 
+
             System.out.println("What is the MAKE of the car you want to rent?");
             String make = sc.next();
-            filterByMake(make);
+            service.filterByMake(make);
             System.out.println("What is the MODEL of the car you want to rent?");
             String model = sc.next();
-            filterByModel(model);
+            service.filterByModel(model);
             System.out.println("What is the COLOR of the car you want to rent?");
             String color = sc.next();
 
@@ -195,61 +213,11 @@ public class Shop {
         }
     }
 
-
-    public void filterByMake(String make) {
-        i = 1;
-        System.out.println(getCarHeader());
-        for (Car car : cars) {
-            if (car.getMake().equalsIgnoreCase(make)) {
-                System.out.print(i + ". ");
-                System.out.println(car);
-                i++;
-            }
-        }
-    }
-
-    public void filterByModel(String model) {
-        i = 1;
-        System.out.println(getCarHeader());
-        for (Car car : cars) {
-            if (car.getModel().equalsIgnoreCase(model)) {
-                System.out.print(i + ". ");
-                System.out.println(car);
-                i++;
-            }
-        }
-    }
-
-    public void filterByBudget(long minPrice, long maxPrice) {
-        i = 1;
-        System.out.println(getCarHeader());
-        for (Car car : cars) {
-            if (car.getBasePrice() >= minPrice && car.getBasePrice() <= maxPrice) {
-                System.out.print(i + ". ");
-                System.out.println(car);
-                i++;
-            }
-        }
-    }
-
-    public long calculatePrice(int numberOfDays, Car car) {
+    private long calculatePrice(int numberOfDays, Car car) {
         long price = car.getBasePrice();
         if (numberOfDays > 15) {
             price = car.getBasePrice() - (numberOfDays - 15) * 10;
         }
         return price;
-    }
-
-    private static String getCarHeader() {
-        return StringUtils.center("  MAKE", 19, " ") +
-                StringUtils.center("  MODEL", 14, " ") +
-                StringUtils.center("YEAR", 16, ' ') +
-                StringUtils.center("CAR TYPE", 8, ' ') +
-                StringUtils.center("FUEL TYPE", 20, ' ') +
-                StringUtils.center("DOORS NUMBER", 10, ' ') +
-                StringUtils.center("COLOR", 10, ' ') +
-                StringUtils.center("TRANSMISSION TYPE", 15, ' ') +
-                StringUtils.center("ENGINE TYPE", 18, ' ') +
-                StringUtils.center("BASE PRICE", 12, ' ');
     }
 }
