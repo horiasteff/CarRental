@@ -138,8 +138,8 @@ public class Car {
                 StringUtils.center(transmissionType, 17, " ") +
                 StringUtils.center(engine, 20, " ") +
                 StringUtils.center(String.valueOf(basePrice), 8, ' ');
-    }
 
+    }
 
 
 }

@@ -1,15 +1,16 @@
 package ro.jademy.carrental.data;
 
+import org.apache.commons.lang3.StringUtils;
 import ro.jademy.carrental.car.Car;
 
 import java.time.LocalDate;
 
 public class RentedCar {
 
-    private Car car;
-    private LocalDate pickUpDate;
-    private LocalDate returnDate;
-    private boolean isCurrentlyRented;
+    protected Car car;
+    protected LocalDate pickUpDate;
+    protected LocalDate returnDate;
+    protected boolean isCurrentlyRented;
 
     public Car getCar() {
         return car;
@@ -46,10 +47,8 @@ public class RentedCar {
     @Override
     public String toString() {
         return "RentedCar: " +
-                "car=" + car +
-                ", pickUpDate=" + pickUpDate +
-                ", returnDate=" + returnDate +
-                ", isCurrentlyRented=" + isCurrentlyRented +
-                '}';
+                "Car=" + car + "\n" +
+                StringUtils.center(String.valueOf(pickUpDate), 15, " ") +
+                StringUtils.center(String.valueOf(returnDate), 15, " ");
     }
 }

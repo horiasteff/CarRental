@@ -5,19 +5,28 @@ import java.util.List;
 
 public class User {
 
-    private String name;
-    private String password;
-    private int nrOfRentedCars;
-    private int age;
-    private int yearsOfDriving;
-    private int nrOfAccidents;
+    protected String name;
+    protected String password;
+    protected int age;
+    protected int yearsOfDriving;
+    protected int nrOfAccidents;
+    protected List<RentedCar> rentedCars = new ArrayList<>();
 
-    public int getNrOfRentedCars() {
-        return nrOfRentedCars;
+    public User(String name, String password, int age) {
+        this.name = name;
+        this.password = password;
+        this.age = age;
     }
 
-    public void setNrOfRentedCars(int nrOfRentedCars) {
-        this.nrOfRentedCars = nrOfRentedCars;
+    public User(String name, String password, int age, int yearsOfDriving) {
+        this.name = name;
+        this.password = password;
+        this.age = age;
+        this.yearsOfDriving = yearsOfDriving;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getAge() {
@@ -48,27 +57,14 @@ public class User {
         return password;
     }
 
-    List<RentedCar> rentedCars = new ArrayList<>();
-
-    public User(String name, String password, int age) {
-        this.name = name;
-        this.password = password;
-        this.age = age;
-    }
-    public User(String name, String password, int age, int yearsOfDriving) {
-        this.name = name;
-        this.password = password;
-        this.age = age;
-        this.yearsOfDriving = yearsOfDriving;
-    }
-
-    public RentedCar getCurrentRentedCar() {
+    public List<RentedCar> getCurrentlyRentedCars() {
+        List<RentedCar> currentlyRentedCars = new ArrayList<>();
         for (RentedCar rentedCar : rentedCars) {
             if (rentedCar.isCurrentlyRented()) {
-                return rentedCar;
+                currentlyRentedCars.add(rentedCar);
             }
         }
-        return null;
+        return currentlyRentedCars;
     }
 
     @Override
