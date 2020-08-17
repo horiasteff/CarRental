@@ -24,8 +24,16 @@ public class User {
         return age;
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public int getYearsOfDriving() {
         return yearsOfDriving;
+    }
+
+    public void setYearsOfDriving(int yearsOfDriving) {
+        this.yearsOfDriving = yearsOfDriving;
     }
 
     public int getNrOfAccidents() {
@@ -45,6 +53,11 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+    public User(String name, String password, int age) {
+        this.name = name;
+        this.password = password;
+        this.age = age;
     }
 
     public RentedCar getCurrentRentedCar() {

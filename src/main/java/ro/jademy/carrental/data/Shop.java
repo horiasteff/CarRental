@@ -51,12 +51,12 @@ public class Shop {
 
         switch (choice) {
             case "1":
-                System.out.println("What is the MMAKE of the car?");
+                System.out.println("What is the MAKE of the car?");
                 String make = sc.next();
                 service.filterByMake(make);
                 break;
             case "2":
-                System.out.println("What is the MMODEL of the car?");
+                System.out.println("What is the MODEL of the car?");
                 String model = sc.next();
                 service.filterByMake(model);
                 break;
@@ -70,6 +70,10 @@ public class Shop {
                 break;
             case "4":
                 break;
+            case "5":
+                showMenu();
+                break;
+
         }
     }
 
@@ -85,8 +89,9 @@ public class Shop {
         System.out.println("2. List available cars");
         System.out.println("3. List rented cars");
         System.out.println("4. Check income");
-        System.out.println("5. Logout");
-        System.out.println("6. Exit");
+        System.out.println("5. Change personal data");
+        System.out.println("6. Logout");
+        System.out.println("7. Exit");
 
         System.out.println();
         System.out.println("Enter your option");
@@ -124,7 +129,6 @@ public class Shop {
                 }
                 break;
             case "4":
-
                 System.out.println();
                 System.out.println("Do you want to rent a car?");
                 answer = sc.next();
@@ -132,7 +136,33 @@ public class Shop {
                     rentACar();
                 }
                 break;
+            case "5":
+                changeInfo();
+                System.out.println("Do you want to go back to previous menu?");
+                String output = sc.next();
+                if(output.equalsIgnoreCase("yes")){
+                    showMenu();
+                }
+                break;
         }
+    }
+
+    private void changeInfo() {
+        System.out.println("What do you want to change?");
+        String info = sc.next();
+        if (info.equalsIgnoreCase("age")) {
+            System.out.println("You're current age is: " + currentUser.getAge());
+            System.out.println("What is your age?");
+            int age = sc.nextInt();
+            currentUser.setAge(age);
+        } else {
+            if (info.equalsIgnoreCase("Years of driving")) {
+                System.out.println("For how many years are you driving?");
+                int years = sc.nextInt();
+                currentUser.setYearsOfDriving(years);
+            }
+        }
+
     }
 
     private void getAllCars() {
@@ -181,7 +211,7 @@ public class Shop {
 
         while (renting) {
             renting = false;
-
+            int answer;
 
             System.out.println("What is the MAKE of the car you want to rent?");
             String make = sc.next();
@@ -196,13 +226,45 @@ public class Shop {
                 if (!car.isRented()) {
                     if (make.equalsIgnoreCase(car.getMake()) && model.equalsIgnoreCase(car.getModel()) && color.equalsIgnoreCase(car.getColor())) {
                         isFound = true;
-                        System.out.println("The car you want to rent is: \n" + car);
-                        car.setRented(true);
-                        currentCar = car;
-                        System.out.println("\nFow how many days do you want to rent the car?");
-                        int answer = sc.nextInt();
-                        System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
-                        break;
+                        if (car.getMake().equalsIgnoreCase("bmw")) {
+                            System.out.println("What is your age?");
+                            int age = sc.nextInt();
+                            if (age < 25) {
+                                System.out.println("You can't rent this type of car");
+                                //  break;
+                                rentACar();
+                            } else {
+                                if (age >= 25) {
+                                    System.out.println("The car you want to rent is: \n" + car);
+                                    car.setRented(true);
+                                    currentCar = car;
+                                    System.out.println("\nFow how many days do you want to rent the car?");
+                                    System.out.println("Please choose a number smaller than 50");
+                                    do {
+                                        answer = sc.nextInt();
+                                        if (answer > 50) {
+                                            System.out.println("Please choose a number smaller than 50");
+                                        }
+                                    } while (answer > 50);
+                                    System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
+                                    break;
+                                }
+                            }
+                        } else {
+                            System.out.println("The car you want to rent is: \n" + car);
+                            car.setRented(true);
+                            currentCar = car;
+                            System.out.println("\nFow how many days do you want to rent the car?");
+                            System.out.println("Please choose a number smaller than 50");
+                            do {
+                                answer = sc.nextInt();
+                                if (answer > 50) {
+                                    System.out.println("Please choose a number smaller than 50");
+                                }
+                            } while (answer > 50);
+                            System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
+                            break;
+                        }
                     }
                 }
             }
@@ -215,8 +277,13 @@ public class Shop {
 
     private long calculatePrice(int numberOfDays, Car car) {
         long price = car.getBasePrice();
-        if (numberOfDays > 15) {
+        if (numberOfDays > 15 && numberOfDays < 50) {
             price = car.getBasePrice() - (numberOfDays - 15) * 10;
+        } else {
+            if (numberOfDays > 50) {
+                System.out.println("Please choose a number smaller than 50");
+                //   calculatePrice(numberOfDays,car);
+            }
         }
         return price;
     }

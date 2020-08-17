@@ -54,7 +54,7 @@ public class DataSource {
     public static List<User> userList() {
         List<User> users = new ArrayList<>();
 
-        User Horia = new User("Horia", "1234");
+        User Horia = new User("Horia", "1234",20 );
         User Daniel = new User("Daniel", "1234");
         User Sorin = new User("Sorin", "1234");
         User Andrei = new User("Andrei", "1234");
