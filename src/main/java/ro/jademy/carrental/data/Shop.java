@@ -12,7 +12,9 @@ public class Shop {
     List<User> users = DataSource.userList();
     FilterService service = new FilterService();
     List<Car> cars = DataSource.carList();
+    Features feature = new Features();
     User currentUser = null;
+    String output;
     int i;
 
     public void login() {
@@ -95,7 +97,7 @@ public class Shop {
         System.out.println();
         System.out.println("Enter your option");
         String option = sc.next();
-        String output;
+
 
         switch (option) {
 
@@ -174,7 +176,7 @@ public class Shop {
             case "8":
                 break;
             default:
-                System.out.println("You entered a wrong number");
+                System.out.println("You entered a wrong number!");
                 showMenu();
                 break;
         }
@@ -307,7 +309,8 @@ public class Shop {
             }
         } while (noOfDaysAnswer > 50);
 
-        System.out.println("The price of the car is:" + calculatePrice(noOfDaysAnswer, car) + "$");
+        long price = calculatePrice(noOfDaysAnswer, car);
+        System.out.println("The price of the car is: $" + price);
         car.setRented(true);
         RentedCar currentCar = new RentedCar();
         currentCar.setCar(car);
@@ -315,12 +318,13 @@ public class Shop {
         currentCar.setPickUpDate(LocalDate.now());
         currentCar.setReturnDate(currentCar.getPickUpDate().plusDays(noOfDaysAnswer));
         currentUser.rentedCars.add(currentCar);
+        feature.payInRates(price);
     }
 
     private long calculatePrice(int numberOfDays, Car car) {
         long price = car.getBasePrice();
         if (numberOfDays > 15 && numberOfDays < 50) {
-            price = car.getBasePrice() - (numberOfDays - 15) * 10;
+            price = car.getBasePrice() - (numberOfDays - 15) * 10 + feature.deliverHome();
         } else {
             if (numberOfDays > 50) {
                 System.out.println("Please choose a number smaller than 50");

@@ -7,8 +7,8 @@ import java.util.UUID;
 public class Car {
 
     protected String id;
-    protected String make;
-    protected String model;
+    protected final String make;
+    protected final String model;
     protected Integer year;
     protected String carType; // coupe, sedan, hatchback, convertible, wagon, SUV
     protected String fuelType; // diesel, gasoline, alternative
@@ -45,16 +45,8 @@ public class Car {
         return make;
     }
 
-    public void setMake(String make) {
-        this.make = make;
-    }
-
     public String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public Integer getYear() {
