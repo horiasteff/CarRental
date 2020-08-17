@@ -10,6 +10,7 @@ public class Shop {
     List<User> users = DataSource.userList();
     FilterService service = new FilterService();
     List<Car> cars = DataSource.carList();
+    RentedCar rentedCar = new RentedCar();
 
     User currentUser = null;
     Car currentCar = null;
@@ -77,10 +78,9 @@ public class Shop {
     }
 
     public void showMenu() {
-        String answer;
 
         System.out.println(" -----------------------------------------------");
-        System.out.println("|    Welcome to the Horia Car Rental Service   |");
+        System.out.println("|    Welcome to the Horia's Car Rental Service   |");
         System.out.println(" -----------------------------------------------");
         System.out.println();
         System.out.println("                    MAIN MENU                   ");
@@ -90,13 +90,13 @@ public class Shop {
         System.out.println("4. Check income");
         System.out.println("5. Change personal data");
         System.out.println("6. Show personal data info");
-        System.out.println("7. Show rented cars");
-        System.out.println("8. Logout");
-        System.out.println("9. Exit");
+        System.out.println("7. Logout");
+        System.out.println("8. Exit");
 
         System.out.println();
         System.out.println("Enter your option");
         String option = sc.next();
+        String output;
 
         switch (option) {
 
@@ -105,42 +105,49 @@ public class Shop {
                 System.out.println();
                 showListMenuOptions();
                 System.out.println("Do you want to rent a car?");
-                answer = sc.next();
-                if (answer.equalsIgnoreCase("yes")) {
+                output = sc.next();
+                if (output.equalsIgnoreCase("yes")) {
                     rentACar();
                 }
                 break;
             case "2":
                 getAvailableCars();
                 System.out.println("Do you also want to rent a car?");
-                answer = sc.next();
-                if (answer.equalsIgnoreCase("yes")) {
+                output = sc.next();
+                if (output.equalsIgnoreCase("yes")) {
                     rentACar();
                 }
                 break;
             case "3":
-                getRentedCars();
-                System.out.println("Do you also want to rent a car?");
-                answer = sc.next();
-                if (answer.equalsIgnoreCase("yes")) {
-                    System.out.println("There are all the available cars");
-                    getAvailableCars();
-                    System.out.println();
-                    rentACar();
+                System.out.println(currentUser.getCurrentRentedCar());
+                System.out.println("Do you want to rent a car?");
+                String choice = sc.next();
+                if (choice.equalsIgnoreCase("yes")) {
+                    showMenu();
+                } else {
+                    if(choice.equalsIgnoreCase("no")){
+                        System.out.println("Want to exit or login with another account?");
+                        output = sc.next();
+                        if(output.equalsIgnoreCase("login")){
+                            login();
+                        }else{
+                            break;
+                        }
+                    }
                 }
                 break;
             case "4":
                 System.out.println();
                 System.out.println("Do you want to rent a car?");
-                answer = sc.next();
-                if (answer.equalsIgnoreCase("yes")) {
+                output = sc.next();
+                if (output.equalsIgnoreCase("yes")) {
                     rentACar();
                 }
                 break;
             case "5":
                 changeInfo();
                 System.out.println("Do you want to go back to previous menu?");
-                String output = sc.next();
+                output = sc.next();
                 if (output.equalsIgnoreCase("yes")) {
                     showMenu();
                 }
@@ -150,28 +157,22 @@ public class Shop {
                 System.out.println("Your name is: " + currentUser.getName());
                 System.out.println("Your age is: " + currentUser.getAge());
                 System.out.println("Your number of years of driving is: " + currentUser.getYearsOfDriving());
-                break;
-            case "7":
-                System.out.println(rentedCar.getCar());
-                System.out.println("Do you want to rent a car?");
-                String choice = sc.next();
-                if (choice.equalsIgnoreCase("yes")) {
+                System.out.println("Do you want to go to the previous menu?");
+                output = sc.next();
+                if (output.equalsIgnoreCase("yes")) {
                     showMenu();
-                } else {
-                    login();
                 }
                 break;
-            case "8":
+            case "7":
                 login();
                 showMenu();
                 break;
-            case "9":
+            case "8":
                 break;
             default:
                 System.out.println("You entered a wrong number");
                 showMenu();
                 break;
-
         }
     }
 
@@ -203,18 +204,18 @@ public class Shop {
             i++;
         }
     }
-
-    private void getRentedCars() {
-        i = 1;
-        System.out.println("These are the rented cars");
-        for (Car car : DataSource.carList()) {
-            if (car.isRented()) {
-                System.out.print(i);
-                System.out.println(car);
-                i++;
-            }
-        }
-    }
+//
+//    private void getRentedCars() {
+//        i = 1;
+//        System.out.println("These are the rented cars");
+//        for (Car car : DataSource.carList()) {
+//            if (car.isRented()) {
+//                System.out.print(i);
+//                System.out.println(car);
+//                i++;
+//            }
+//        }
+//    }
 
     private void getAvailableCars() {
         i = 1;
@@ -257,10 +258,8 @@ public class Shop {
                                 System.out.println("You can't rent this type of car");
                                 rentACar();
                             } else {
-                                if (age >= 25) {
-                                    numberOfDays(car);
-                                    break;
-                                }
+                                numberOfDays(car);
+                                break;
                             }
                         } else {
                             numberOfDays(car);
@@ -276,9 +275,6 @@ public class Shop {
         }
         showMenu();
     }
-
-
-    RentedCar rentedCar = new RentedCar();
 
     private void numberOfDays(Car car) {
         int answer;
@@ -298,6 +294,7 @@ public class Shop {
         currentCar = car;
         rentedCar.setCar(car);
         rentedCar.setCurrentlyRented(true);
+        currentUser.rentedCars.add(rentedCar);
     }
 
     private long calculatePrice(int numberOfDays, Car car) {

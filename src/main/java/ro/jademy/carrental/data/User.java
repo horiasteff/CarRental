@@ -50,10 +50,6 @@ public class User {
 
     List<RentedCar> rentedCars = new ArrayList<>();
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
     public User(String name, String password, int age) {
         this.name = name;
         this.password = password;

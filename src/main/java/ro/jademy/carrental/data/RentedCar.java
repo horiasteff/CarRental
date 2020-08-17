@@ -42,4 +42,14 @@ public class RentedCar {
     public void setCurrentlyRented(boolean currentlyRented) {
         isCurrentlyRented = currentlyRented;
     }
+
+    @Override
+    public String toString() {
+        return "RentedCar: " +
+                "car=" + car +
+                ", pickUpDate=" + pickUpDate +
+                ", returnDate=" + returnDate +
+                ", isCurrentlyRented=" + isCurrentlyRented +
+                '}';
+    }
 }
