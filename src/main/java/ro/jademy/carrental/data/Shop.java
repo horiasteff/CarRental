@@ -1,6 +1,5 @@
 package ro.jademy.carrental.data;
 
-import org.apache.commons.lang3.StringUtils;
 import ro.jademy.carrental.car.Car;
 
 import java.util.List;
@@ -90,8 +89,10 @@ public class Shop {
         System.out.println("3. List rented cars");
         System.out.println("4. Check income");
         System.out.println("5. Change personal data");
-        System.out.println("6. Logout");
-        System.out.println("7. Exit");
+        System.out.println("6. Show personal data info");
+        System.out.println("7. Show rented cars");
+        System.out.println("8. Logout");
+        System.out.println("9. Exit");
 
         System.out.println();
         System.out.println("Enter your option");
@@ -140,10 +141,37 @@ public class Shop {
                 changeInfo();
                 System.out.println("Do you want to go back to previous menu?");
                 String output = sc.next();
-                if(output.equalsIgnoreCase("yes")){
+                if (output.equalsIgnoreCase("yes")) {
                     showMenu();
                 }
                 break;
+            case "6":
+                System.out.println("You're personal info is:");
+                System.out.println("Your name is: " + currentUser.getName());
+                System.out.println("Your age is: " + currentUser.getAge());
+                System.out.println("Your number of years of driving is: " + currentUser.getYearsOfDriving());
+                break;
+            case "7":
+                System.out.println(rentedCar.getCar());
+                System.out.println("Do you want to rent a car?");
+                String choice = sc.next();
+                if (choice.equalsIgnoreCase("yes")) {
+                    showMenu();
+                } else {
+                    login();
+                }
+                break;
+            case "8":
+                login();
+                showMenu();
+                break;
+            case "9":
+                break;
+            default:
+                System.out.println("You entered a wrong number");
+                showMenu();
+                break;
+
         }
     }
 
@@ -156,7 +184,7 @@ public class Shop {
             int age = sc.nextInt();
             currentUser.setAge(age);
         } else {
-            if (info.equalsIgnoreCase("Years of driving")) {
+            if (info.equalsIgnoreCase("Year")) {
                 System.out.println("For how many years are you driving?");
                 int years = sc.nextInt();
                 currentUser.setYearsOfDriving(years);
@@ -208,7 +236,6 @@ public class Shop {
 
         while (renting) {
             renting = false;
-            int answer;
 
             System.out.println("What is the MAKE of the car you want to rent?");
             String make = sc.next();
@@ -247,13 +274,16 @@ public class Shop {
                 renting = true;
             }
         }
+        showMenu();
     }
 
-    private void numberOfDays(Car car){
+
+    RentedCar rentedCar = new RentedCar();
+
+    private void numberOfDays(Car car) {
         int answer;
         System.out.println("The car you want to rent is: \n" + car);
-        car.setRented(true);
-        currentCar = car;
+
         System.out.println("\nFow how many days do you want to rent the car?");
         System.out.println("Please choose a number smaller than 50");
         do {
@@ -262,8 +292,14 @@ public class Shop {
                 System.out.println("Please choose a number smaller than 50");
             }
         } while (answer > 50);
+
         System.out.println("The price of the car is:" + calculatePrice(answer, car) + "$");
+        car.setRented(true);
+        currentCar = car;
+        rentedCar.setCar(car);
+        rentedCar.setCurrentlyRented(true);
     }
+
     private long calculatePrice(int numberOfDays, Car car) {
         long price = car.getBasePrice();
         if (numberOfDays > 15 && numberOfDays < 50) {

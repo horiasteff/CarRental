@@ -59,6 +59,12 @@ public class User {
         this.password = password;
         this.age = age;
     }
+    public User(String name, String password, int age, int yearsOfDriving) {
+        this.name = name;
+        this.password = password;
+        this.age = age;
+        this.yearsOfDriving = yearsOfDriving;
+    }
 
     public RentedCar getCurrentRentedCar() {
         for (RentedCar rentedCar : rentedCars) {
