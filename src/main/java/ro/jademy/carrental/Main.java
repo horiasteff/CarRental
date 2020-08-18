@@ -8,7 +8,6 @@ public class Main {
 
         Shop shop = new Shop();
 
-        shop.login();
-        shop.showMenu();
+        shop.start();
     }
 }

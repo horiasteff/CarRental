@@ -3,9 +3,9 @@ package ro.jademy.carrental.data;
 import java.util.Scanner;
 
 public class Features {
+
     Scanner sc = new Scanner(System.in);
     String output;
-
 
     protected long deliverHome() {
         String answer;
@@ -21,14 +21,15 @@ public class Features {
                 System.out.println("There is a tax of $25/100km out of Bucharest");
                 System.out.println("How many km are from Bucharest to your city?");
                 km = sc.nextInt();
-
             }
         }
         return (long) (km * 0.25);
     }
 
     protected void payInRates(long price) {
+
         int rate;
+        
         System.out.println("Do you want to pay in rates?");
         output = sc.next();
         if (output.equalsIgnoreCase("yes")) {

@@ -1,5 +1,7 @@
 package ro.jademy.carrental.data;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,9 +71,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "Name='" + name + '\'' +
-                ", password=" + password +
-                '}';
+        return "User: " +
+                StringUtils.center(name,10);
     }
 }

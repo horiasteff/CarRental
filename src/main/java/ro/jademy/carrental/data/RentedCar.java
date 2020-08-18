@@ -49,6 +49,6 @@ public class RentedCar {
         return "RentedCar: " +
                 "Car=" + car + "\n" +
                 StringUtils.center(String.valueOf(pickUpDate), 15, " ") +
-                StringUtils.center(String.valueOf(returnDate), 15, " ");
+                StringUtils.center(String.valueOf(returnDate), 15, " ") + "\n";
     }
 }
