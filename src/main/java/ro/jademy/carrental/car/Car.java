@@ -1,26 +1,31 @@
 package ro.jademy.carrental.car;
 
 import org.apache.commons.lang3.StringUtils;
+import ro.jademy.carrental.enums.Color;
+import ro.jademy.carrental.enums.FuelType;
+import ro.jademy.carrental.enums.TransmissionType;
 
 import java.util.UUID;
 
 public class Car {
 
     protected String id;
+    protected int index;
     protected final String make;
     protected final String model;
     protected Integer year;
     protected String carType; // coupe, sedan, hatchback, convertible, wagon, SUV
-    protected String fuelType; // diesel, gasoline, alternative
+    protected FuelType fuelType; // diesel, gasoline, alternative
     protected Integer doorNumber;
-    protected String color;
-    protected String transmissionType; // automatic, manual
+    protected Color color;
+    protected TransmissionType transmissionType; // automatic, manual
     protected String engine;
     protected long basePrice;
     protected boolean isRented = false;
 
-    public Car(String make, String model, Integer year, String carType, String fuelType, Integer doorNumber, String color, String transmissionType, String engine, long basePrice) {
+    public Car(int index, String make, String model, Integer year, String carType, FuelType fuelType, Integer doorNumber, Color color, TransmissionType transmissionType, String engine, long basePrice) {
         this.id = UUID.randomUUID().toString();
+        this.index = index;
         this.make = make;
         this.model = model;
         this.year = year;
@@ -31,6 +36,14 @@ public class Car {
         this.transmissionType = transmissionType;
         this.engine = engine;
         this.basePrice = basePrice;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public boolean isRented() {
@@ -65,11 +78,11 @@ public class Car {
         this.carType = carType;
     }
 
-    public String getFuelType() {
+    public FuelType getFuelType() {
         return fuelType;
     }
 
-    public void setFuelType(String fuelType) {
+    public void setFuelType(FuelType fuelType) {
         this.fuelType = fuelType;
     }
 
@@ -81,19 +94,19 @@ public class Car {
         this.doorNumber = doorNumber;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
-    public String getTransmissionType() {
+    public TransmissionType getTransmissionType() {
         return transmissionType;
     }
 
-    public void setTransmissionType(String transmissionType) {
+    public void setTransmissionType(TransmissionType transmissionType) {
         this.transmissionType = transmissionType;
     }
 
@@ -117,21 +130,19 @@ public class Car {
         return id;
     }
 
-
     @Override
     public String toString() {
-        return StringUtils.center(make, 14, " ") +
+        return StringUtils.center(String.valueOf(index), 10, " ") +
+                StringUtils.center(make, 14, " ") +
                 StringUtils.center(model, 16, " ") +
                 StringUtils.center(String.valueOf(year), 14, ' ') +
                 StringUtils.center(carType, 12, " ") +
-                StringUtils.center(fuelType, 14, " ") +
+                StringUtils.center(String.valueOf(fuelType), 14, " ") +
                 StringUtils.center(String.valueOf(doorNumber), 15, ' ') +
-                StringUtils.center(color, 10, " ") +
-                StringUtils.center(transmissionType, 17, " ") +
+                StringUtils.center(String.valueOf(color), 10, " ") +
+                StringUtils.center(String.valueOf(transmissionType), 17, " ") +
                 StringUtils.center(engine, 20, " ") +
                 StringUtils.center(String.valueOf(basePrice), 8, ' ');
 
     }
-
-
 }

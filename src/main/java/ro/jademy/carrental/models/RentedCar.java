@@ -1,4 +1,4 @@
-package ro.jademy.carrental.data;
+package ro.jademy.carrental.models;
 
 import org.apache.commons.lang3.StringUtils;
 import ro.jademy.carrental.car.Car;

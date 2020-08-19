@@ -1,8 +1,12 @@
 package ro.jademy.carrental.car.skoda;
 
+import ro.jademy.carrental.enums.Color;
+import ro.jademy.carrental.enums.FuelType;
+import ro.jademy.carrental.enums.TransmissionType;
+
 public class Superb extends Skoda {
 
-    public Superb(String model, Integer year, String carType, String fuelType, Integer doorNumber, String color, String transmissionType, String engine, long basePrice) {
-        super("Skoda", model, year, carType, fuelType, doorNumber, color, transmissionType, engine, basePrice);
+    public Superb(int index,String model, Integer year, String carType, FuelType fuelType, Integer doorNumber, Color color, TransmissionType transmissionType, String engine, long basePrice) {
+        super(index,"Skoda", model, year, carType, fuelType, doorNumber, color, transmissionType, engine, basePrice);
     }
 }

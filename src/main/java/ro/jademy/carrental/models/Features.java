@@ -1,4 +1,4 @@
-package ro.jademy.carrental.data;
+package ro.jademy.carrental.models;
 
 import java.util.Scanner;
 

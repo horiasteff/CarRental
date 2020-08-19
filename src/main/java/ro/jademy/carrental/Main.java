@@ -1,6 +1,6 @@
 package ro.jademy.carrental;
 
-import ro.jademy.carrental.data.Shop;
+import ro.jademy.carrental.models.Shop;
 
 public class Main {
 

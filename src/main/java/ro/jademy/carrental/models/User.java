@@ -1,7 +1,8 @@
-package ro.jademy.carrental.data;
+package ro.jademy.carrental.models;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,42 +10,21 @@ public class User {
 
     protected String name;
     protected String password;
-    protected int age;
-    protected int yearsOfDriving;
+    protected LocalDate birthDate;
+    protected LocalDate yearsOfDriving;
     protected int nrOfAccidents;
     protected List<RentedCar> rentedCars = new ArrayList<>();
 
-    public User(String name, String password, int age) {
-        this.name = name;
-        this.password = password;
-        this.age = age;
-    }
 
-    public User(String name, String password, int age, int yearsOfDriving) {
+    public User(String name, String password, String birthDate, String yearsOfDriving) {
         this.name = name;
         this.password = password;
-        this.age = age;
-        this.yearsOfDriving = yearsOfDriving;
+        this.birthDate = LocalDate.parse(birthDate);
+        this.yearsOfDriving = LocalDate.parse(yearsOfDriving);
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getYearsOfDriving() {
-        return yearsOfDriving;
-    }
-
-    public void setYearsOfDriving(int yearsOfDriving) {
-        this.yearsOfDriving = yearsOfDriving;
     }
 
     public int getNrOfAccidents() {
@@ -67,6 +47,14 @@ public class User {
             }
         }
         return currentlyRentedCars;
+    }
+
+    public int calculateAge(){
+        return LocalDate.now().getYear()- birthDate.getYear();
+    }
+
+    public int calculateDrivingYears(){
+        return LocalDate.now().getYear() - yearsOfDriving.getYear();
     }
 
     @Override
